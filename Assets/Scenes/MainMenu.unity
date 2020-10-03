@@ -2102,7 +2102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adde637ba68b22b438c47b62c6562f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingSong: {fileID: 8300000, guid: d3e7e957f15825144a7a56b84bd285d4, type: 3}
   _highScoreTextView: {fileID: 546845266}
 --- !u!1 &1594753376
 GameObject:

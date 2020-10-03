@@ -7,8 +7,14 @@ using UnityEngine.UI;
 public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text _currentScoreTextView;
+    [SerializeField] GameObject _popupMenu;
 
     int _currentScore;
+
+    private void Awake()
+    {
+        Resume();
+    }
     private void Update()
     {
         //Increase Score
@@ -20,9 +26,32 @@ public class Level01Controller : MonoBehaviour
         //Exit Level
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            ExitLevel();
+            if(_popupMenu.activeSelf)
+            {
+                Resume();
+            }
+            else
+            {
+                MenuPopup();
+            }
+            
         }
     }
+
+    public void MenuPopup()
+    {
+        //enable popup menu and unlock cursor
+        _popupMenu.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void Resume()
+    {
+        //disable popup menu and lock cursor
+        _popupMenu.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void ExitLevel()
     {
         //compare score to high score
