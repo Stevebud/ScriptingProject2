@@ -8,6 +8,8 @@ public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text _currentScoreTextView;
     [SerializeField] GameObject _popupMenu;
+    public Slider healthSlider;
+    public PlayerHealth playerHealth;
 
     int _currentScore;
 
@@ -36,6 +38,11 @@ public class Level01Controller : MonoBehaviour
             }
             
         }
+        //Reload Level
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            ReloadScene();
+        }
     }
 
     public void MenuPopup()
@@ -43,6 +50,8 @@ public class Level01Controller : MonoBehaviour
         //enable popup menu and unlock cursor
         _popupMenu.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        Time.timeScale = 0f;
     }
 
     public void Resume()
@@ -50,6 +59,8 @@ public class Level01Controller : MonoBehaviour
         //disable popup menu and lock cursor
         _popupMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Time.timeScale = 1f;
     }
 
     public void ExitLevel()
@@ -72,5 +83,16 @@ public class Level01Controller : MonoBehaviour
         _currentScore += scoreIncrease;
         //update score display so we can see the new score
         _currentScoreTextView.text = "Score: " + _currentScore.ToString();
+    }
+    public void UpdateHealthSlider()
+    {
+        //set slider value equal to health
+        healthSlider.value = playerHealth.health;
+    }
+
+    public void ReloadScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
     }
 }
