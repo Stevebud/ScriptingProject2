@@ -6,8 +6,17 @@ public class PlayerHealth : MonoBehaviour
 {
     public Level01Controller level01Controller;
     [SerializeField] GameObject _deathText;
+    [SerializeField] AudioClip playerHit;
+    [SerializeField] AudioClip playerDeath;
 
     public int health = 100;
+    AudioSource audioSource;
+
+    private void Start()
+    {
+        audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = playerHit;
+    }
 
     private void Awake()
     {
@@ -22,9 +31,11 @@ public class PlayerHealth : MonoBehaviour
         //check if player is dead
         if(health == 0)
         {
+            audioSource.clip = playerDeath;//Audio feedback
             Time.timeScale = 0f;
             _deathText.SetActive(true);
         }
+        audioSource.Play();//audio feedback
     }
     
 }
