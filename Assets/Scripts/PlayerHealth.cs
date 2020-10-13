@@ -29,7 +29,7 @@ public class PlayerHealth : MonoBehaviour
         //update visual
         level01Controller.UpdateHealthSlider();
         //check if player is dead
-        if(health == 0)
+        if(health <= 0)
         {
             audioSource.clip = playerDeath;//Audio feedback
             Time.timeScale = 0f;
