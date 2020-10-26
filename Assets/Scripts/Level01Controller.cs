@@ -8,22 +8,37 @@ public class Level01Controller : MonoBehaviour
 {
     [SerializeField] Text _currentScoreTextView;
     [SerializeField] GameObject _popupMenu;
+    [SerializeField] GameObject enemyCube;
+    [SerializeField] Transform player;
     public Slider healthSlider;
     public PlayerHealth playerHealth;
+    [SerializeField] float enemySpawnCooldown = 10f;
+    [SerializeField] float maxEnemyDistance = 100f;
+    //[SerializeField] AudioClip enemySpawnClip;
 
     int _currentScore;
+    float spawnCooldownLeft;
+
+    private void Start()
+    {
+        spawnCooldownLeft = 2f;
+    }
 
     private void Awake()
     {
         Resume();
+        //SpawnEnemy();
     }
     private void Update()
     {
-        //Increase Score
-        //TODO replace with real implementation later
-        if (Input.GetKeyDown(KeyCode.Q))
+        //update timer for cooldown
+        spawnCooldownLeft -= Time.deltaTime;
+
+        //spawn another enemy if the cooldown hits 0
+        if(spawnCooldownLeft <= 0)
         {
-            IncreaseScore(5);
+            SpawnEnemy();
+            spawnCooldownLeft = enemySpawnCooldown;
         }
         //Exit Level
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -94,5 +109,13 @@ public class Level01Controller : MonoBehaviour
     {
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
+    }
+
+    public void SpawnEnemy()
+    {
+        float enDist = maxEnemyDistance / 10;
+        Vector3 spawnPoint = new Vector3(Random.Range(-enDist, enDist) * 10, 0f, Random.Range(-enDist,enDist) * 10);
+        //GameObject newEnemy = Instantiate(enemyCube, spawnPoint, enemyCube.transform.rotation);
+        Instantiate(enemyCube, player.transform.position + spawnPoint, enemyCube.transform.rotation);
     }
 }

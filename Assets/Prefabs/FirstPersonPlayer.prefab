@@ -97,7 +97,7 @@ MonoBehaviour:
   weaponParticles: {fileID: 6624630784026836566}
   camController: {fileID: 6624630783494971261}
   rayOrigin: {fileID: 6624630783008273970}
-  shootDistance: 40
+  shootDistance: 60
   hitLight: {fileID: 0}
   weaponDamage: 3
   weaponKnockBack: 800

@@ -21,8 +21,8 @@ public class DamageVolume : MonoBehaviour
         {
             //if it is, do damage
             collidedHealth.DamagePlayer(damageAmount);
-            Destroy(this.gameObject);
         }
+        Destroy(this.gameObject);
     }
 
 }

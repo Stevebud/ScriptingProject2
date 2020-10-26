@@ -5,19 +5,25 @@ using UnityEngine;
 public class EnemyCube : MonoBehaviour
 {
     public int cubeHealth = 10;
+    [SerializeField] int scoreValue = 5;
     public float colorChangeFactor = 10f;
     public float weaponCooldown = 3f;
     public float projectileSpeed = 20f;
     public float weaponRange = 20f;
     public float weaponRecoil = 30f;
     public int weaponDamage = 20;
+    [SerializeField] float moveSpeed = 5f;
     public float aimCorrectionSpeed = 0.9f;
+    [SerializeField] float minDistFromTarget = 30f;
     [SerializeField] Rigidbody projectile;
     [SerializeField] Transform target;
     [SerializeField] Transform rayOrigin;
     [SerializeField] LayerMask playerLayer;
     [SerializeField] AudioClip enemyCubeHitClip;
     [SerializeField] AudioClip enemyCubeShootClip;
+    [SerializeField] AudioClip enemySpawnClip;
+    [SerializeField] AudioClip enemyDeathClip;
+    [SerializeField] Level01Controller levelController;
 
     Renderer rend;
     AudioSource audioSource;
@@ -31,6 +37,7 @@ public class EnemyCube : MonoBehaviour
         rend = GetComponent<Renderer>();
         cubeRB = gameObject.GetComponent<Rigidbody>();
         audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.clip = enemySpawnClip;
         //startColor = rend.material.color;
         cooldownLeft = weaponCooldown;
         DamageVolume damageVol = projectile.gameObject.GetComponent<DamageVolume>();
@@ -67,6 +74,14 @@ public class EnemyCube : MonoBehaviour
                 cooldownLeft = weaponCooldown;
             }
         }
+
+        //move the cube toward the player if it isn't too close
+        if(distFromTarget > minDistFromTarget)
+        {
+            float step = moveSpeed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, step);
+        }
+        
     }
 
     public void damageTaken(int damageAmount)
@@ -77,8 +92,17 @@ public class EnemyCube : MonoBehaviour
 
         cubeHealth -= damageAmount;
         rend.material.color += new Color(colorChangeFactor, -colorChangeFactor, -colorChangeFactor, 1);
+        //If the cube dies
         if(cubeHealth <= 0)
         {
+            //add score
+            levelController.IncreaseScore(scoreValue);
+            //Audio Feedback
+            audioSource.clip = enemyDeathClip;
+            audioSource.Play();
+            //create another cube
+            levelController.SpawnEnemy();
+            //destroy the cube
             Destroy(this.gameObject);
         }
     }
@@ -87,7 +111,7 @@ public class EnemyCube : MonoBehaviour
     {
         //Instantiates projectile at gameObject
         Rigidbody newProject;
-        newProject = Instantiate(projectile, transform.position, transform.rotation);
+        newProject = Instantiate(projectile, rayOrigin.position + transform.forward * 1.5f, transform.rotation);
 
         //gives the projectile velocity
         newProject.velocity = transform.TransformDirection(Vector3.forward * projectileSpeed);

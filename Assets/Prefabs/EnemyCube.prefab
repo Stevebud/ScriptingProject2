@@ -110,13 +110,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cubeHealth: 10
+  scoreValue: 5
   colorChangeFactor: 0.5
-  weaponCooldown: 0.5
-  projectileSpeed: 100
+  weaponCooldown: 0.8
+  projectileSpeed: 30
   weaponRange: 40
   weaponRecoil: 100
   weaponDamage: 20
-  aimCorrectionSpeed: 0.95
+  moveSpeed: 5
+  aimCorrectionSpeed: 0.94
+  minDistFromTarget: 30
   projectile: {fileID: 801815480737328235, guid: 242c0d7c464998c4790c16fd24d621fc,
     type: 3}
   target: {fileID: 0}
@@ -124,6 +127,11 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 1024
+  enemyCubeHitClip: {fileID: 8300000, guid: 62d535c449c47a04f8d087a8303a32ca, type: 3}
+  enemyCubeShootClip: {fileID: 8300000, guid: f511e7861a1c51e41b6945afc9b12df1, type: 3}
+  enemySpawnClip: {fileID: 8300000, guid: ba8063f9732e7e741a215f0e1a384a55, type: 3}
+  enemyDeathClip: {fileID: 0}
+  levelController: {fileID: 0}
 --- !u!54 &1232721507696962039
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,8 +158,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 62d535c449c47a04f8d087a8303a32ca, type: 3}
-  m_PlayOnAwake: 0
+  m_audioClip: {fileID: 8300000, guid: ba8063f9732e7e741a215f0e1a384a55, type: 3}
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -196,7 +204,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.8
       inSlope: 0
       outSlope: 0
       tangentMode: 0
