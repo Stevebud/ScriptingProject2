@@ -5572,6 +5572,11 @@ PrefabInstance:
       propertyPath: hitLight
       value: 
       objectReference: {fileID: 525438659}
+    - target: {fileID: 6624630783494971263, guid: 344426b429ea98d4ca926afc50f14ce2,
+        type: 3}
+      propertyPath: mouseSensitivity
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 6624630784317719305, guid: 344426b429ea98d4ca926afc50f14ce2,
         type: 3}
       propertyPath: level01Controller

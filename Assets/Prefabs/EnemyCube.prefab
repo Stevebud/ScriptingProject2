@@ -118,7 +118,7 @@ MonoBehaviour:
   weaponRecoil: 100
   weaponDamage: 20
   moveSpeed: 5
-  aimCorrectionSpeed: 0.94
+  aimCorrectionSpeed: 0.98
   minDistFromTarget: 30
   projectile: {fileID: 801815480737328235, guid: 242c0d7c464998c4790c16fd24d621fc,
     type: 3}
